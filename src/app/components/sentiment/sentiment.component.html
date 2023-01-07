@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row section">
+    <div class="col-md-12">
+      <div class="mt-2 card px-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div>
+              <h4 *ngIf="symbolName" class="text-center mb-3">
+                {{ symbolName | titlecase }} ({{ symbolName }})
+              </h4>
+              <hr>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-4" *ngFor="let stock of sentimentDataList; let i = index">
+            <div class="d-flex">
+              <div class="mr-5">
+                <p><span class="span-style">{{ getMonthDetails(stock?.month) }}</span></p>
+                <p>Change: {{ stock?.change }}</p>
+                <p>MSPR: {{ stock?.mspr }}</p>
+              </div>
+              <div>
+                <img *ngIf="stock.change>0"
+                  src="https://thumbs.dreamstime.com/b/green-up-financial-arrows-stock-market-white-background-stock-market-green-arrows-177888977.jpg"
+                  width="40px" />
+                <img *ngIf="stock.change<0"
+                  src="https://media.istockphoto.com/id/521975183/tr/vekt%C3%B6r/red-arrow-vector.jpg?s=170667a&w=0&k=20&c=5YTiriclhw5Rxkn111ljJki6KmdzAtFr1bNznQabVuw="
+                  width="40px" />
+              </div>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="loading">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 p-2 mt-4">
+        <button id="backBtn" class="btn btn-primary" routerLink="/">
+          Back to list of stocks
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

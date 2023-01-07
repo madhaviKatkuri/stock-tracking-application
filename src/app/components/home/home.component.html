@@ -1,0 +1,77 @@
+<div class="container">
+  <!-- //STOCK SYMBOL INPUT-->
+  <div class="row m-5 d-flex flex-row justify-content-center">
+    <div class="col-md-8 col-12">
+      <div class="d-flex flex-row justify-content-center">
+        <div class="card mt-5 pt-5">
+          <form [formGroup]="stockTrackingForm" (ngSubmit)="stockFormSubmit()" novalidate autocomplete="off">
+            <div>
+              <p class="pt-3">Enter the symbol of a stock to track(i.e. AAPL, TSLA, GOOGL)</p>
+            </div>
+            <div class="stock-input-button-style">
+              <div>
+                <input id="stockInput" type="text" class="form-control input-sytyle mt-3 mr-3" id="static"
+                  formControlName="symbol" placeholder="Enter stock symbol here..." required />
+              </div>
+              <div>
+                <button id="trackBtn" type="submit" class="btn btn-primary mt-3"
+                  [disabled]="!stockTrackingForm.valid">Track Stock</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--loading -->
+  <div *ngIf="loading" class="row text-center mt-2">
+    <div class="col d-flex text-center">
+      <p class="m-auto p-2  loading-para">Please wait a moment..Data is fetching..........</p>
+    </div>
+  </div>
+  <!--displaying stock data -->
+  <div class="row">
+    <div class="col-md-5 card m-3 stock-cards" *ngFor="let stock of stockList; let i = index">
+      <div class="row">
+        <div class="col-6">
+          <h5>{{ stock.description | titlecase }} ({{ stock.symbol }})</h5>
+        </div>
+        <div class="col-6 text-end">
+          <span [id]="'remove' + stock.symbol" (click)="removeStockItem(i)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-x-square-fill" viewBox="0 0 16 16">
+              <path
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+            </svg>
+          </span>
+        </div>
+        <hr>
+        <div class="col-8">
+          <ul class="list-style text-start">
+            <li class="mb-2">Change today: <span class="span-style">{{ stock?.d | percent }}</span></li>
+            <li class="mb-2">Current price: <span class="span-style">{{ stock?.c | currency }}</span></li>
+            <li class="mb-2">Opening price: <span class="span-style">{{ stock?.o | currency }}</span></li>
+            <li class="mb-2">High price:<span class="span-style">{{ stock?.h | currency }}</span> </li>
+          </ul>
+          <a [id]="'sentiment' + stock.symbol" routerLink="/sentiment/{{ stock?.symbol }}"
+            class="btn btn-primary sentiment-details-button" routerLinkActive="active">
+            Go to social sentiment details ->
+          </a>
+        </div>
+        <div class="col-sm-4 m-auto">
+          <div class="col-12 text-center" *ngIf="stock.d>0">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfKXoOTVmudz5JccNOKf0XJj8l1m8szEf1sA&usqp=CAU"
+              alt="Positive Trend" width="50px" height="50vh" />
+          </div>
+          <div class="col-12 text-center" *ngIf="stock.d<0">
+            <img
+              src="https://media.istockphoto.com/id/516006762/vector/red-down-arrow.jpg?s=1024x1024&w=is&k=20&c=eR0_2KqE5Ge0Qns9_7tM0pk9E5sFYMK1j3laE_WBG4w="
+              alt="Negative Trend" width="50px" height="50vh" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

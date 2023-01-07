@@ -1,0 +1,14 @@
+.heading {
+    color: blue;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.image {
+    border-radius: 180px;
+    height: 6vh;
+    width: 3vw;
+
+}
